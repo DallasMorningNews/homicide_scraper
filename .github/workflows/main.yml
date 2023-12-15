@@ -1,0 +1,27 @@
+name: Scrape
+
+on:
+  schedule:
+    - cron: "0 8 * * *" # 8 a.m. every day UTC
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    - run: pip install pandas requests
+    - name: Run scraper
+      run: python3 scrape.py
+
+    - name: Add and commit	
+      run: |-	
+         git add .	
+         git config user.name "Automated"	
+         git config user.email "actions@users.noreply.github.com"	
+         git commit -m "feat: Latest data" 	
+    - name: Push	
+      run: git push
