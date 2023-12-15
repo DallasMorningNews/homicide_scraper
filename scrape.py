@@ -38,8 +38,19 @@ grab_data(url)
 print(len(json_data))
 df = pd.DataFrame(json_data)
 
-df.to_csv('dallasopendata.csv', index=False)
+#df.to_csv('dallasopendata.csv', index=False)
 
-d2 = pd.read_csv('dallasopendata.csv')
+#d2 = pd.read_csv('dallasopendata.csv')
 
-print(d2.shape[0])
+#print(d2.shape[0])
+
+#filter to just murders
+df = (df
+      .loc[((df['nibrs_code'] == '09A') | 
+            (df['ucrcode'].isin([110, 120])))]
+        .sort_values('date1', ascending=False)
+        .drop_duplicates(subset = ['incidentnum'], keep='first')
+        .reset_index(drop=True)
+        .copy())
+
+df.to_csv('data/created/dpd_murders_data.csv', index=False)
