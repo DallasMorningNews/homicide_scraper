@@ -57,9 +57,13 @@ df = (df.sort_values('date1', ascending=False)
         .reset_index(drop=True)
         .copy())
 
+<<<<<<< HEAD
 df.to_csv(f'data/created/dpd_murders_data_{ftime}.csv', index=False)
 
 end_time = time.time() # record the current time again
 elapsed_time = end_time - start_time # calculate the elapsed time
 
 print(f"Elapsed time: {elapsed_time} seconds")
+=======
+df.to_csv('data/created/scraped_dpd_murders_data.csv', index=False)
+>>>>>>> 4d4ff9f9afc43f18e021ab4b2a06a5bdb1f31525
