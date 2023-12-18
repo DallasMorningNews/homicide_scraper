@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
-import json
+# import json
+import os
 import time
 import datetime
 
@@ -52,6 +53,9 @@ df = pd.DataFrame(json_data)
 #print(d2.shape[0])
 
 #filter to just murders
+if not os.path.exists('data/created'):
+    os.makedirs('data/created')
+
 df = (df.sort_values('date1', ascending=False)
         .drop_duplicates(subset = ['incidentnum'], keep='first')
         .reset_index(drop=True)
