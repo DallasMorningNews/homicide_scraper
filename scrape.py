@@ -1,12 +1,19 @@
 import pandas as pd
 import requests
 import json
+import time
+import datetime
+
+start_time = time.time() # record the current time
+
+ftime = datetime.datetime.now().strftime("%Y%m%d-%H-%M")
+
 
 # url = 'https://www.dallasopendata.com/resource/qv6i-rri7.json?$limit=1200000'
 limit = 1200000
-url = 'https://www.dallasopendata.com/resource/qv6i-rri7.json?$limit='+str(limit)
+url = f"https://www.dallasopendata.com/resource/qv6i-rri7.json?$where=nibrs_code = '09A' or ucrcode=110 or ucrcode=120&$limit={str(limit)}"
 
-
+print(url)
 json_data = []
 
 def grab_data(url):
@@ -45,12 +52,14 @@ df = pd.DataFrame(json_data)
 #print(d2.shape[0])
 
 #filter to just murders
-df = (df
-      .loc[((df['nibrs_code'] == '09A') | 
-            (df['ucrcode'].isin([110, 120])))]
-        .sort_values('date1', ascending=False)
+df = (df.sort_values('date1', ascending=False)
         .drop_duplicates(subset = ['incidentnum'], keep='first')
         .reset_index(drop=True)
         .copy())
 
-df.to_csv('data/created/dpd_murders_data.csv', index=False)
+df.to_csv(f'data/created/dpd_murders_data_{ftime}.csv', index=False)
+
+end_time = time.time() # record the current time again
+elapsed_time = end_time - start_time # calculate the elapsed time
+
+print(f"Elapsed time: {elapsed_time} seconds")
