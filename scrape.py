@@ -12,7 +12,7 @@ ftime = datetime.datetime.now().strftime("%Y%m%d-%H-%M")
 
 # url = 'https://www.dallasopendata.com/resource/qv6i-rri7.json?$limit=1200000'
 limit = 1200000
-url = f"https://www.dallasopendata.com/resource/qv6i-rri7.json?$where=nibrs_code = '09A' or ucrcode=110 or ucrcode=120&$limit={str(limit)}"
+url = f"https://www.dallasopendata.com/resource/qv6i-rri7.json?$where=nibrs_code%20=%20%2709A%27%20or%20ucrcode=110%20or%20ucrcode=120&$limit={str(limit)}"
 
 print(url)
 json_data = []
