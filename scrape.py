@@ -53,4 +53,4 @@ df = (df
         .reset_index(drop=True)
         .copy())
 
-df.to_csv('data/created/dpd_murders_data.csv', index=False)
+df.to_csv('data/created/scraped_dpd_murders_data.csv', index=False)
